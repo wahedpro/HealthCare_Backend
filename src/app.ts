@@ -1,9 +1,12 @@
 import express, { Application, Request, Response } from "express";
 import { prisma } from "./app/lib/prisma";
+import { IndexRouts } from "./app/routes";
 
 const app: Application = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use("/api/v1", IndexRouts)
 
 // Basic route
 app.get('/', async(req: Request, res: Response) => {
