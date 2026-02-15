@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Speciality {\n  id         String    @id @default(uuid())\n  title      String    @unique @db.VarChar(100)\n  decription String?   @db.Text\n  icons      String?   @db.VarChar(255)\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n  isDeleted  Boolean   @default(false)\n  deletedAt  DateTime?\n\n  @@index([isDeleted], name: \"idx_speciality_is_deleted\")\n  @@index([title], name: \"idx_speciality_title\")\n  @@map(\"specialities\")\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Speciality {\n  id         String    @id @default(uuid())\n  title      String    @unique @db.VarChar(100)\n  decription String?   @db.Text\n  icons      String?   @db.VarChar(255)\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n  isDeleted  Boolean   @default(false)\n  deletedAt  DateTime?\n\n  @@index([isDeleted], name: \"idx_speciality_is_deleted\")\n  @@index([title], name: \"idx_speciality_title\")\n  @@map(\"specialities\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
