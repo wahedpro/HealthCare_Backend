@@ -41,8 +41,24 @@ const deleteSpeciality = catchAsync(
   }
 )
 
+const updateSpeciality = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await SpecialityService.updateSpeciality(id as string, payload);
+    sendResponse(res, {
+      httpStatusCode: 200,
+      success: true,
+      message: 'speciality updated successfully!',
+      data: result
+    })
+  }
+)
+
+
 export const SpecialityController = {
   createSpeciality,
   getAllSpecialities,
-  deleteSpeciality
+  deleteSpeciality,
+  updateSpeciality
 }
