@@ -11,7 +11,7 @@ interface EnvConfig {
 }
 
 const loadEnvVariables = (): EnvConfig => {
-    
+
     const requiredEnvVariable = [
         'NODE_ENV', 
         'PORT', 
