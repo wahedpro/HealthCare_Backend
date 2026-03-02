@@ -18,26 +18,37 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
         },
     });
 
-    if(!data.user) {
+    if (!data.user) {
         throw new Error("Failed to register Patient!");
     }
 
     // create patient profile
-    const patient = await prisma.$transaction(async (tx) => {
-        const patientTx = await tx.patient.create({
-            data: {
-                userId: data.user.id,
-                name: payload.name,
-                email: payload.email,
+    try {
+        const patient = await prisma.$transaction(async (tx) => {
+            const patientTx = await tx.patient.create({
+                data: {
+                    userId: data.user.id,
+                    name: payload.name,
+                    email: payload.email,
+                },
+            });
+            return patientTx;
+        });
+
+        return {
+            ...data,
+            patient,
+        };
+
+    } catch (error) {
+        console.log("Error creating patient profile:", error);
+        await prisma.user.delete({
+            where: {
+                id: data.user.id,
             },
         });
-        return patientTx;
-    });
-
-    return {
-        ...data,
-        patient,
-    };
+        throw error;
+    }
 };
 
 
@@ -55,11 +66,11 @@ const loginUser = async (payload: ILoginUserPayload) => {
         },
     });
 
-    if(data.user.status === UserStatus.BLOCKED){
+    if (data.user.status === UserStatus.BLOCKED) {
         throw new Error("Your account has been blocked");
     }
 
-    if(data.user.isDeleted || data.user.status === UserStatus.DELETED) {
+    if (data.user.isDeleted || data.user.status === UserStatus.DELETED) {
         throw new Error("Your account has been deleted");
     }
 
